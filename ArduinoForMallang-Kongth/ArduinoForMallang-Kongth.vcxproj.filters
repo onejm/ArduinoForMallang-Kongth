@@ -21,6 +21,9 @@
     <ClCompile Include="Feeder.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="CodeForDevelopment.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LoadCellTest.cpp">
