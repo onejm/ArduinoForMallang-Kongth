@@ -129,6 +129,7 @@
   <ItemGroup>
     <ClCompile Include="CodeForDevelopment.cpp" />
     <ClCompile Include="CodeForDevelopment2.cpp" />
+    <ClCompile Include="CodeForDevelopment3.cpp" />
     <ClCompile Include="Feeder.cpp" />
     <ClCompile Include="WaterLevelSensorTest.cpp" />
   </ItemGroup>
