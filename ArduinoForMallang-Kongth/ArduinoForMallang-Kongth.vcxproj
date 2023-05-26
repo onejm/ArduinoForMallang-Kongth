@@ -133,6 +133,7 @@
     <ClCompile Include="Feeder.cpp" />
     <ClCompile Include="footBowl.cpp" />
     <ClCompile Include="ServoDevelopmentCode.cpp" />
+    <ClCompile Include="waterBowlWifiTest.cpp" />
     <ClCompile Include="WaterLevelSensorTest.cpp" />
   </ItemGroup>
   <ItemGroup>
