@@ -42,6 +42,9 @@
     <ClCompile Include="foodBowlWifiTest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="WaterLevelSensorTest2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LoadCellTest.cpp">

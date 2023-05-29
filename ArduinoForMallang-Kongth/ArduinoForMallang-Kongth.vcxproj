@@ -136,6 +136,7 @@
     <ClCompile Include="ServoDevelopmentCode.cpp" />
     <ClCompile Include="waterBowlWifiTest.cpp" />
     <ClCompile Include="WaterLevelSensorTest.cpp" />
+    <ClCompile Include="WaterLevelSensorTest2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="LoadCellTest.cpp" />
