@@ -61,6 +61,6 @@ void loop() { // loop안에 코드가 아두이노가 무한 반복으로 실행됨
             tone(speakerPin, tones[i]);
             delay(500);
         }
-
+        noTone(speakerPin);
     }
 }
