@@ -33,10 +33,13 @@
     <ClCompile Include="ServoDevelopmentCode.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="footBowl.cpp">
+    <ClCompile Include="foodBowl.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="waterBowlWifiTest.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="foodBowlWifiTest.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

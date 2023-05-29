@@ -1,7 +1,7 @@
 //개발용 코드 
 #include <Servo.h>
 #include "HX711.h"
-#define calibration_factor 527.5 //캘리브레이션 값
+#define calibration_factor 533.33//캘리브레이션 값
 #define DOUT  4 //데이터 핀
 #define CLK  3 // 클럭 핀
 Servo servo;
@@ -12,7 +12,7 @@ int input = 0;
 int angle = 90;
 void setup() { // setup안에 코드는 처음 한번만 실행됨
     Serial.begin(9600);
-    servo.attach(9);
+    servo.attach(2);
     scale.set_scale(calibration_factor);
     scale.tare(); //영점잡기. 현재 측정값을 0으로 둔다.
 }

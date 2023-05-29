@@ -131,7 +131,8 @@
     <ClCompile Include="CodeForDevelopment2.cpp" />
     <ClCompile Include="CodeForDevelopment3.cpp" />
     <ClCompile Include="Feeder.cpp" />
-    <ClCompile Include="footBowl.cpp" />
+    <ClCompile Include="foodBowl.cpp" />
+    <ClCompile Include="foodBowlWifiTest.cpp" />
     <ClCompile Include="ServoDevelopmentCode.cpp" />
     <ClCompile Include="waterBowlWifiTest.cpp" />
     <ClCompile Include="WaterLevelSensorTest.cpp" />
