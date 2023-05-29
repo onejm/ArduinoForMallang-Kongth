@@ -10,6 +10,10 @@ int value;
 int value2;
 int input = 0;
 int angle = 90;
+int speakerPin = 5;
+int numTones = 8;
+int tones[] = { 261, 293, 329, 349, 391, 440, 493, 523 };
+
 void setup() { // setup안에 코드는 처음 한번만 실행됨
     Serial.begin(9600);
     servo.attach(2);
@@ -52,5 +56,11 @@ void loop() { // loop안에 코드가 아두이노가 무한 반복으로 실행됨
     else if (input < value - value2 && input != 0) {
         servo.write(90);
         input = 0;
+        for (int i = 0; i < numTones; i++)
+        {
+            tone(speakerPin, tones[i]);
+            delay(500);
+        }
+
     }
 }
