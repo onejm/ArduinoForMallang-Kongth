@@ -4,5 +4,11 @@ void setup() {
 
 void loop() {
 	int level = analogRead(A0);  // 수분센서의 신호를 측정합니다.
-	Serial.println(level);   //시리얼 모니터에 값을 출력합니다.
+	level = level - 25;
+	if (level < 0) {
+		Serial.println(0);
+	}
+	else {
+		Serial.println(level);
+	}
 }
