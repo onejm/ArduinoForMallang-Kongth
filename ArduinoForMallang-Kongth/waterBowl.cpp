@@ -54,42 +54,22 @@ void check()
         getLow8SectionValue();
         getHigh12SectionValue();
 
-        Serial.println("low 8 sections value = ");
         for (int i = 0; i < 8; i++)
         {
-            Serial.print(low_data[i]);
-            Serial.print(".");
             if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
             {
                 low_count++;
             }
-            if (low_count == 8)
-            {
-                Serial.print("      ");
-                Serial.print("PASS");
-            }
         }
-        Serial.println("  ");
-        Serial.println("  ");
-        Serial.println("high 12 sections value = ");
         for (int i = 0; i < 12; i++)
         {
-            Serial.print(high_data[i]);
-            Serial.print(".");
-
             if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
             {
                 high_count++;
             }
-            if (high_count == 12)
-            {
-                Serial.print("      ");
-                Serial.print("PASS");
-            }
         }
 
-        Serial.println("  ");
-        Serial.println("  ");
+
 
         for (int i = 0; i < 8; i++) {
             if (low_data[i] > THRESHOLD) {
@@ -108,13 +88,33 @@ void check()
             trig_section++;
             touch_val >>= 1;
         }
-        SERIAL.print(trig_section * 150);
+        if (trig_section == 0) {
+            SERIAL.println(0);
+        }
+        else if (trig_section == 1) {
+            SERIAL.println(203);
+        }
+        else if (trig_section == 2) {
+            SERIAL.println(312);
+        }
+        else if (trig_section == 3) {
+            SERIAL.println(395);
+        }
+        else if (trig_section == 4) {
+            SERIAL.println(501);
+        }
+        else if (trig_section == 5) {
+            SERIAL.println(654);
+        }
+        else if (trig_section > 6) {
+            SERIAL.println(772);
+        }
         delay(500);
     }
 }
 
 void setup() {
-    SERIAL.begin(115200);
+    SERIAL.begin(9600);
     Wire.begin();
 }
 
