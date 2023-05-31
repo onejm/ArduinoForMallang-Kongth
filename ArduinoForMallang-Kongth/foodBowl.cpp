@@ -1,66 +1,125 @@
-//개발용 코드 
-#include <Servo.h>
-#include "HX711.h"
-#define calibration_factor 533.33//캘리브레이션 값
-#define DOUT  4 //데이터 핀
-#define CLK  3 // 클럭 핀
-Servo servo;
-HX711 scale(DOUT, CLK);
-int value;
-int value2;
-int input = 0;
-int angle = 90;
-int speakerPin = 5;
-int numTones = 8;
-int tones[] = { 261, 293, 329, 349, 391, 440, 493, 523 };
+#include <Wire.h>
 
-void setup() { // setup안에 코드는 처음 한번만 실행됨
-    Serial.begin(9600);
-    servo.attach(2);
-    scale.set_scale(calibration_factor);
-    scale.tare(); //영점잡기. 현재 측정값을 0으로 둔다.
+#ifdef ARDUINO_SAMD_VARIANT_COMPLIANCE
+#define SERIAL SerialUSB
+#else
+#define SERIAL Serial
+#endif
+
+unsigned char low_data[8] = { 0 };
+unsigned char high_data[12] = { 0 };
+int temp;
+
+#define NO_TOUCH       0xFE
+#define THRESHOLD      100
+#define ATTINY1_HIGH_ADDR   0x78
+#define ATTINY2_LOW_ADDR   0x77
+
+void getHigh12SectionValue(void)
+{
+    memset(high_data, 0, sizeof(high_data));
+    Wire.requestFrom(ATTINY1_HIGH_ADDR, 12);
+    while (12 != Wire.available());
+
+    for (int i = 0; i < 12; i++) {
+        high_data[i] = Wire.read();
+    }
+    delay(10);
 }
 
-void loop() { // loop안에 코드가 아두이노가 무한 반복으로 실행됨
-    value = (int)scale.get_units();
-    if (value <= 2) {
-        Serial.print("h");
-        Serial.print("0000");
+void getLow8SectionValue(void)
+{
+    memset(low_data, 0, sizeof(low_data));
+    Wire.requestFrom(ATTINY2_LOW_ADDR, 8);
+    while (8 != Wire.available());
+
+    for (int i = 0; i < 8; i++) {
+        low_data[i] = Wire.read(); // receive a byte as character
     }
-    else if (value > 2 && value <= 9) {
-        Serial.print("h");
-        Serial.print("000");
-        Serial.print(value);
-    }
-    else if (value > 9 && value <= 99) {
-        Serial.print("h");
-        Serial.print("00");
-        Serial.print(value);
-    }
-    else if (value > 99 && value <= 999) {
-        Serial.print("h");
-        Serial.print("0");
-        Serial.print(value);
-    }
-    else {
-        Serial.print("h");
-        Serial.print(value);
-    }
-    if (Serial.available() > 0 && input == 0) {  // 시리얼 버퍼에 데이터가 있는지 확인
-        input = Serial.parseInt();  // 입력된 정수 값을 읽어옴
-        value2 = value;
-    }
-    if (input > value - value2 && input != 0) {
-        servo.write(180);  // 서보 모터를 지정한 각도로 움직임
-    }
-    else if (input < value - value2 && input != 0) {
-        servo.write(90);
-        input = 0;
-        for (int i = 0; i < numTones; i++)
+    delay(10);
+}
+
+void check()
+{
+    int sensorvalue_min = 250;
+    int sensorvalue_max = 255;
+    int low_count = 0;
+    int high_count = 0;
+    while (1)
+    {
+        uint32_t touch_val = 0;
+        uint8_t trig_section = 0;
+        low_count = 0;
+        high_count = 0;
+        getLow8SectionValue();
+        getHigh12SectionValue();
+
+        for (int i = 0; i < 8; i++)
         {
-            tone(speakerPin, tones[i]);
-            delay(500);
+            if (low_data[i] >= sensorvalue_min && low_data[i] <= sensorvalue_max)
+            {
+                low_count++;
+            }
         }
-        noTone(speakerPin);
+        for (int i = 0; i < 12; i++)
+        {
+            if (high_data[i] >= sensorvalue_min && high_data[i] <= sensorvalue_max)
+            {
+                high_count++;
+            }
+        }
+
+
+
+        for (int i = 0; i < 8; i++) {
+            if (low_data[i] > THRESHOLD) {
+                touch_val |= 1 << i;
+
+            }
+        }
+        for (int i = 0; i < 12; i++) {
+            if (high_data[i] > THRESHOLD) {
+                touch_val |= (uint32_t)1 << (8 + i);
+            }
+        }
+
+        while (touch_val & 0x01)
+        {
+            trig_section++;
+            touch_val >>= 1;
+        }
+
+        if (trig_section == 0) {
+            SERIAL.print(0);
+        }
+        else if (trig_section == 1) {
+            SERIAL.print(203);
+        }
+        else if (trig_section == 2) {
+            SERIAL.print(312);
+        }
+        else if (trig_section == 3) {
+            SERIAL.print(395);
+        }
+        else if (trig_section == 4) {
+            SERIAL.print(501);
+        }
+        else if (trig_section == 5) {
+            SERIAL.print(654);
+        }
+        else if (trig_section >= 6) {
+            SERIAL.print(772);
+        }
+        delay(500);
     }
+}
+
+void setup() {
+    SERIAL.begin(9600);
+    Wire.begin();
+}
+
+void loop()
+{
+    check();
 }
