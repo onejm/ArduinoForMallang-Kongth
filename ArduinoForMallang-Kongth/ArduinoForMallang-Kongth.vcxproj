@@ -135,6 +135,7 @@
     <ClCompile Include="foodBowlWifiTest.cpp" />
     <ClCompile Include="ServoDevelopmentCode.cpp" />
     <ClCompile Include="waterBowl.cpp" />
+    <ClCompile Include="waterBowl2.cpp" />
     <ClCompile Include="waterBowlWifiTest.cpp" />
     <ClCompile Include="WaterLevelSensorTest.cpp" />
     <ClCompile Include="WaterLevelSensorTest2.cpp" />

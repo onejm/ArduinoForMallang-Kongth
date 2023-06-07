@@ -90,31 +90,31 @@ void check()
         }
 
         if (trig_section == 0) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(0);
         }
         else if (trig_section == 1) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(203);
         }
         else if (trig_section == 2) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(312);
         }
         else if (trig_section == 3) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(395);
         }
         else if (trig_section == 4) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(501);
         }
         else if (trig_section == 5) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(654);
         }
         else if (trig_section >= 6) {
-            SERIAL.print(w);
+            SERIAL.print('w');
             SERIAL.print(772);
         }
         delay(500);

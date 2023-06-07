@@ -48,6 +48,9 @@
     <ClCompile Include="waterBowl.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="waterBowl2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="LoadCellTest.cpp">
