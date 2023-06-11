@@ -2,6 +2,7 @@
 #define calibration_factor 574.3 //캘리브레이션 값
 #define DOUT  3 //데이터 핀
 #define CLK  2 // 클럭 핀
+#define PUMP 4 // 펌프 핀
 
 
 const char* ssid = "U+Net4C9B";
@@ -10,14 +11,28 @@ const char* serverIP = "localhost";
 const int serverPort = 8080;
 
 int value;
+int temp;
 HX711 scale(DOUT, CLK);
 void setup() {
     Serial.begin(9600);  // 값 모니터링 위해서...
     scale.set_scale(calibration_factor);
     scale.tare(); //영점잡기. 현재 측정값을 0으로 둔다.
+    pinMode(PUMP, OUTPUT);
+    digitalWrite(PUMP, LOW);
 }
 void loop() {
+    temp = (int)scale.get_units();
+    if (temp < 200) {
+        value = temp;
+    }
     value = (int)scale.get_units();
+    if (value < 130) {
+        digitalWrite(PUMP, HIGH);
+    }
+    if (value > 150) {
+        digitalWrite(PUMP, LOW);
+    }
+
     if (value <= 2) {
         Serial.print("w");
         Serial.print("0000");
